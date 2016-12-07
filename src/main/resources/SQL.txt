@@ -1,0 +1,29 @@
+Requirement 9
+
+First answer:
+
+SELECT Salesperson.Name FROM Salesperson, Orders WHERE 
+Salesperson.SalespersonID = Orders.SalespersonID AND CustomerID IN 
+(SELECT CustomerID from Customers WHERE Name = 'George');
+
+
+
+Second answer:
+
+SELECT Salesperson.Name FROM Salesperson 
+WHERE Salesperson.SalespersonID NOT IN (
+	SELECT Orders.SalespersonID FROM Orders, Customer 
+	WHERE Orders.CustomerID = Customer.CustomerID 
+	AND Customer.Name = 'George'
+	);
+
+
+Third answer:
+
+SELECT Name
+FROM Salesperson, Orders
+WHERE Salesperson.SalespersonID = Orders.SalespersonID
+GROUP BY Name, SalespersonID
+HAVING COUNT( SalespersonID ) > 1
+
+
